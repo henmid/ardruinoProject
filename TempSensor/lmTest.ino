@@ -1,28 +1,32 @@
-//LM35 output voltage has a linear relation with the Celsius temperature, output of 0 v when 0 ℃, 
-//every increase 1 ℃, the output voltage increase 10 mv
-#define lmPin A0  //LM35 attach to
-#include <Wire.h> 
-#include <LiquidCrystal_I2C.h>
-LiquidCrystal_I2C lcd(0x27,16,2);  // set the LCD address to 0x27 for a 16 chars and 2 line display
 
-float tem = 0;
-long lmVal = 0;
+					// every increase 1 ℃, the output voltage increase 10 mv
+#define lmPin A0 			// LM35-temperatur sensoren er koblet til AnalogPin 0
+#include <Wire.h> 			// Inkluder Wire modul
+#include <LiquidCrystal_I2C.h>		// Inkluder LiquidCrystal_I2C modul
+LiquidCrystal_I2C lcd(0x27,16,2); 	// Set størelse på LCD til 0x27 for et display på 16x2 (16 karakterer, 2 rader)
+
+float temp = 0;				// lag en float variabel kalt tem med verdi 0
+long lmVal = 0;				// lag en long variabel kalt lmVal med verdi 0
 
 void setup()
 {
-  lcd.init();  //initialize the lcd
-  lcd.backlight();  //open the backlight 
+  Serial.begin(9600);			// Start Serial-kommunikasjon på 9600 baud (bit-rate)
+  lcd.init();  				// Aktiver LCD-en
+  lcd.backlight();  			// Aktiver bakgrunnslys 
+  
 }
 void loop()
 {
-  lmVal = analogRead(lmPin);
-  tem = (lmVal * 0.0048828125 * 100);//5/1024=0.0048828125;1000/10=100
-  lcd.setCursor(5,0);
-  lcd.print("LM35");
-  lcd.setCursor(0,1);
-  lcd.print("Tem= ");
-  lcd.setCursor(5,1);
-  lcd.print(tem);
-  lcd.print(" C");
-  delay(200);
+  lmVal = analogRead(lmPin);		// Lagre verdien fra lmPin til lmVal
+  temp = (lmVal * 0.0048828125 * 100);	// 5/1024=0.0048828125;1000/10=100------   formel for å regne om voltage til celcius
+  lcd.setCursor(0,0);			// plassering på LCD-en, 5 = hvor på rekken output startet
+  lcd.print("Temperatur Kontr//oll");	// Display på LCD-en 0 = øverste rekke
+  lcd.setCursor(0,1);			// Plassering        1 = nederste rekke
+  lcd.print("Temp= ");			// 
+  lcd.setCursor(5,1);			//
+  lcd.print(temp);			// Display temperatur verdien
+  lcd.print(" C");			//
+  delay(200);				// vent i 0,2 sekunder
+  Serial.println(temp);			// Print temp-verdien i serial monitor
+  delay(500);				// vent i 0,5 sekunder
 }
