@@ -1,8 +1,8 @@
 //LM35 output voltage has a linear relation with the Celsius temperature, output of 0 v when 0 ℃,
 //every increase 1 ℃, the output voltage increase 10 mv
 #define lmPin A0  //LM35 attach to
-#include <Wire.h>
-#include <LiquidCrystal_I2C.h>
+#include "Wire.h"
+#include "LiquidCrystal_I2C.h"
 LiquidCrystal_I2C lcd(0x27,16,2);  // set the LCD address to 0x27 for a 16 chars and 2 line display
 
 float tem = 0;
