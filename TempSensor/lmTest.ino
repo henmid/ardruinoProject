@@ -8,6 +8,7 @@ LiquidCrystal_I2C lcd(0x27,16,2); 	// Set størelse på LCD til 0x27 for et disp
 float temp = 0;				// lag en float variabel kalt tem med verdi 0
 long lmVal = 0;				// lag en long variabel kalt lmVal med verdi 0
 
+
 void setup()
 {
   Serial.begin(9600);			// Start Serial-kommunikasjon på 9600 baud (bit-rate)
@@ -27,6 +28,23 @@ void loop()
   lcd.print(temp);			// Display temperatur verdien
   lcd.print(" C");			//
   delay(200);				// vent i 0,2 sekunder
-  Serial.println(temp);			// Print temp-verdien i serial monitor
-  delay(500);				// vent i 0,5 sekunder
+  //Serial.println(temp);			// Print temp-verdien i serial monitor
+  Serial.print("Temperaturen er: ");
+  Serial.println(temp);
+  delay(3000);				// vent i 3 sekunder
 }
+                                      
+
+
+
+
+
+
+
+
+
+
+/*** Putty må kjøres konstant for at temperatur verdien skal lagres i filen til sql database ***/
+
+
+
